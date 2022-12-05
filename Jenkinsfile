@@ -24,7 +24,7 @@ pipeline{
         stage('Docker Build'){
             steps{
                 sh 'docker version'
-                sh 'docker build -t image-demo /home/ubuntu'
+                sh 'docker build -t image-demo .'
                 
                 
             
