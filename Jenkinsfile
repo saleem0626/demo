@@ -1,8 +1,6 @@
 pipeline{
     agent any
-    environment {
-        PATH = "$PATH:/opt/apache-maven-3.8.2/bin"
-    }
+   
     stages{
        stage('GetCode'){
             steps{
@@ -14,21 +12,21 @@ pipeline{
                 sh 'mvn clean install'
             }
          }
-        stage('SonarQube analysis') {
-        steps{
-        withSonarQubeEnv('sonar') { 
-           sh "mvn sonar:sonar"
-    }
-        }
-        }
-        stage('Docker Build'){
-            steps{
-                sh 'docker version'
-                sh 'docker build -t image-demo .'
+  //      stage('SonarQube analysis') {
+   //     steps{
+    //    withSonarQubeEnv('sonar') { 
+      //     sh "mvn sonar:sonar"
+   // }
+     //   }
+       // }
+      //  stage('Docker Build'){
+        //    steps{
+          //      sh 'docker version'
+            //    sh 'docker build -t image-demo .'
                 
                 
             
-            }
-        }
+//            }
+  //      }
     }
 }
