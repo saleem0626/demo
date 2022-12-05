@@ -21,6 +21,11 @@ pipeline{
     }
         }
         }
-       
+        stage('Docker Build'){
+            steps{
+            sh ' docker build -t image1:latest .'
+            
+            }
+        }
     }
 }
