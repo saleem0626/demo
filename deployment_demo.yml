@@ -15,7 +15,7 @@ spec:
       containers:
       - name: angular-app
         image: demo
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         ports:
         - containerPort: 8085
 # service type loadbalancer
