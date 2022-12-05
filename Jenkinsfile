@@ -6,7 +6,7 @@ pipeline{
     stages{
        stage('GetCode'){
             steps{
-                git 'https://github.com/Patilgit/k8s-demo.git'
+                git 'https://github.com/Patilgit/demo.git'
             }
          }        
        stage('Build'){
