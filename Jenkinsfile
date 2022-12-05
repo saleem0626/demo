@@ -12,13 +12,13 @@ pipeline{
                 sh 'mvn clean install'
             }
          }
-  //      stage('SonarQube analysis') {
-   //     steps{
-    //    withSonarQubeEnv('sonar') { 
-      //     sh "mvn sonar:sonar"
-   // }
-     //   }
-       // }
+        stage('SonarQube analysis') {
+            steps{
+                withSonarQubeEnv('sonar') { 
+                 sh "mvn sonar:sonar"
+                }
+            }
+        }
       //  stage('Docker Build'){
         //    steps{
           //      sh 'docker version'
