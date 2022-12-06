@@ -38,9 +38,7 @@ pipeline {
              }
              stage ("kubernetes deployment") {
                 steps{
-        sh 'sudo su -'
-        sh 'cd /var/lib/jenkins/workspace/kdemo'
-        sh 'kubectl apply -f deployment_demo.yml'
+                  sh 'kubectl apply -f deployment_demo.yml'
                 }
     }
          }
