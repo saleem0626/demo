@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    
+    stages{
+       stage('GetCode'){
+            steps{
+                git branch: 'main', credentialsId: '40f7a21f-6ce7-4bc0-b115-4a85ab05b062', url: 'https://github.com/Patilgit/demo.git'
+            }
+         }        
+       stage('Build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage('SonarQube analysis') {
+            steps{
+                withSonarQubeEnv('sonar') { 
+                 sh "mvn sonar:sonar"
+                }
+            }
+       }
+       
+        stage('Docker Build'){
+           steps{
+               sh 'docker version'
+               sh 'docker build -t demo .'
+               sh 'docker tag demo darshan626/new-repo:docker-demo'
+           }
+      }
+         stage('Docker Push') {
+      steps {
+      	withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh 'docker push darshan626/new-repo:docker-demo'
+        }
+      }
+             }
+             stage ("kubernetes deployment") {
+                steps{
+        withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"        
+        sh 'kubectl apply -f deployment_demo.yml'
+                }
+    }
+         }
+            
+    }
+}
