@@ -38,8 +38,8 @@ pipeline {
              }
              stage ("kubernetes deployment") {
                 steps{
-        withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"        
+        sh 'sudo su -'
+        sh 'cd /var/lib/jenkins/workspace/kdemo'
         sh 'kubectl apply -f deployment_demo.yml'
                 }
     }
