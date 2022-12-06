@@ -1,6 +1,6 @@
 pipeline{
     agent any
-   // hh
+   
     stages{
        stage('GetCode'){
             steps{
