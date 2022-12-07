@@ -28,7 +28,7 @@ spec:
   selector:
     app: angular-app
   ports:
-    - protocol: TCP
+    - protocol: HTTP
       port: 8086
       targetPort: 8086
   type: LoadBalancer
