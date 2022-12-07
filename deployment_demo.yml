@@ -25,10 +25,10 @@ kind: Service
 metadata:
   name: angular-app-svc
 spec:
+  type: Nodeport
   selector:
     app: angular-app
   ports:
     - protocol: TCP
-      port: 8086
-      targetPort: 8086
-  type: LoadBalancer
+      nodeport: 8088
+      targetPort: 8088
