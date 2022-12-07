@@ -30,5 +30,5 @@ spec:
     app: angular-app
   ports:
     - protocol: TCP
-      nodeport: 8088
+      port: 8088
       targetPort: 8088
