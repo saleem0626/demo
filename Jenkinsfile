@@ -24,10 +24,7 @@ pipeline{
       steps {
       	withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-             sh 'docker version'
-               sh 'docker build -t demo .'
-               sh 'docker tag demo darshan626/new-repo:latest'
-          sh 'docker push darshan626/new-repo:latest'
+            sh './automate.sh'
         }
       }
                 
