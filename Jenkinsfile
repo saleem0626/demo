@@ -28,9 +28,12 @@ pipeline{
             sh './automate.sh'
         }
       }
-                
-            
-            }
+           }
+        stage ("kubernetes deployment") {
+                steps{
+                  sh 'kubectl apply -f deployment_demo.yml'
+                }
+    }
       }
     }
 
