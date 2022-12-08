@@ -19,13 +19,17 @@ pipeline{
                 }
             }
        }
-        stage('Docker Build'){
-          steps{
-            sh 'def mavenpom = readmavenpom 'pom.xml''   
-            sh 'docker version'
-            sh 'docker build -t image-demo .'
-            sh 'echo "${mavenpom.version}'  
-                
+        
+         stage('Docker Build and Push') {
+      steps {
+      	withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+             sh 'docker version'
+               sh 'docker build -t demo .'
+               sh 'docker tag demo darshan626/new-repo:latest'
+          sh 'docker push darshan626/new-repo:latest'
+        }
+      }
                 
             
             }
