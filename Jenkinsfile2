@@ -20,11 +20,13 @@ pipeline {
                 }
             }
        }
-       stage('sonar report'){
-           steps{
-               waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
-                }
-           }
+       stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
         stage('Docker Build'){
            steps{
                sh 'docker version'
