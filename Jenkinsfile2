@@ -20,7 +20,11 @@ pipeline {
                 }
             }
        }
-       
+       stage('sonar report'){
+           steps{
+               waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+                }
+           }
         stage('Docker Build'){
            steps{
                sh 'docker version'
