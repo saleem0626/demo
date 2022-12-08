@@ -24,6 +24,7 @@ pipeline{
       steps {
       	withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+            sh 'chmod 777 automate.sh'
             sh './automate.sh'
         }
       }
