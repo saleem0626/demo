@@ -19,14 +19,16 @@ pipeline{
                 }
             }
        }
-      //  stage('Docker Build'){
-        //    steps{
-          //      sh 'docker version'
-            //    sh 'docker build -t image-demo .'
+        stage('Docker Build'){
+          steps{
+            sh 'def mavenpom = readmavenpom 'pom.xml''   
+            sh 'docker version'
+            sh 'docker build -t image-demo .'
+            sh 'echo "${mavenpom.version}'  
                 
                 
             
-//            }
-  //      }
+            }
+      }
     }
 }
