@@ -28,21 +28,15 @@ pipeline {
               }
             }
           }
-        stage('Docker Build'){
-           steps{
-               sh 'docker version'
-               sh 'docker build -t demo .'
-               sh 'docker tag demo darshan626/new-repo:latest'
-           }
-      }
-         stage('Docker Push') {
+          stage('Docker Build and Push') {
       steps {
       	withCredentials([usernamePassword(credentialsId: 'demo', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push darshan626/new-repo:latest'
+            sh 'chmod 777 automate.sh'
+            sh './automate.sh'
         }
       }
-             }
+           }
              stage ("kubernetes deployment") {
                 steps{
                   sh 'kubectl apply -f deployment_demo.yml'
