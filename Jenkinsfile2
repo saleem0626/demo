@@ -24,6 +24,7 @@ pipeline {
             steps {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
+                // in manage jenkins > configure systems > sonarqube servers > Url should not end with / it must be http//ip:9000
               }
             }
           }
