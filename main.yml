@@ -2,6 +2,6 @@
 - hosts: all
   become: True
   roles:
-   - tomcatrole
+   - tomcat
 
       
