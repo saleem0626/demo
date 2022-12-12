@@ -24,7 +24,7 @@ pipeline{
       stage('Ansible Deploy') {
              
            steps {
-                 ansiblePlaybook credentialsId: 'tomcat', installation: 'ansible', inventory: 'inventories/dev/hosts', playbook: 'main.yml'
+                 ansiblePlaybook credentialsId: 'tomans', installation: 'ansible', inventory: 'inventories/dev/hosts', playbook: 'main.yml'
             }
         }
       }
