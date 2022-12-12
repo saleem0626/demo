@@ -4,6 +4,6 @@
   become_user: root
   gather_facts: false
   tasks:
-    - include_role:
+   -  include_role:
         name: tomcat
       
