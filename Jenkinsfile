@@ -1,6 +1,6 @@
-pipeline{
+pipeline {
     agent any
-   // hh
+    
     stages{
        stage('GetCode'){
             steps{
@@ -11,20 +11,28 @@ pipeline{
             steps{
                 sh 'mvn clean install'
             }
-         }
+        }
+        
         stage('SonarQube analysis') {
             steps{
                 withSonarQubeEnv('sonar') { 
-                 sh "mvn sonar:sonar"
+                 sh "mvn clean package sonar:sonar"
                 }
             }
        }
-        
+       stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+                // in manage jenkins > configure systems > sonarqube servers > Url should not end with / it must be http//ip:9000
+              }
+            }
+          }
      
       stage('Ansible Deploy') {
              
            steps {
-                 ansiblePlaybook credentialsId: 'tomans', installation: 'ansible', inventory: 'inventories/dev/hosts', playbook: 'main.yml'
+                 sh 'ansible-playbook playbook.yml'
             }
         }
       }
