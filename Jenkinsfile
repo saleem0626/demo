@@ -27,7 +27,7 @@ pipeline{
                  
              
                
-             ansiblePlaybook credentialsId: 'tomcat', installation: 'ansible', inventory: 'inventories/dev', playbook: 'main.yml'
+             ansiblePlaybook credentialsId: 'tomcat', installation: 'ansible', inventory: 'inventories/dev/hosts', playbook: 'main.yml'
 
                
             
