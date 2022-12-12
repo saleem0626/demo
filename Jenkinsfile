@@ -29,11 +29,18 @@ pipeline{
         }
       }
            }
-        stage ("kubernetes deployment") {
-                steps{
-                  sh 'kubectl apply -f deployment_demo.yml'
-                }
-    }
+       stage('Ansible Deploy') {
+             
+            steps {
+                 
+             
+               
+               sh "ansible-playbook main.yml -i inventories/dev/hosts --user jenkins --key-file ~/.ssh/id_rsa"
+
+               
+            
+            }
+        }
       }
     }
 
