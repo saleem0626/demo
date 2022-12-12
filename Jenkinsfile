@@ -21,18 +21,18 @@ pipeline{
        }
         
      
-       stage('Ansible Deploy') {
+      // stage('Ansible Deploy') {
              
-            steps {
+        //    steps {
                  
              
                
-               ansiblePlaybook credentialsId: 'tomcat', installation: 'ansible', inventory: 'inventories/dev', playbook: 'main.yml'
+          //     ansiblePlaybook credentialsId: 'tomcat', installation: 'ansible', inventory: 'inventories/dev', playbook: 'main.yml'
 
                
             
-            }
-        }
+            //}
+        //}
       }
     }
 
