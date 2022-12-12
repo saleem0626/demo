@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+
+  become: True
+
+  tasks:
+
+      - name: Delpoy into Tomcat
+
+        copy:
+
+           src: /var/lib/jenkins/workspace/kdemo/target/demo-4.2.3-SNAPSHOT.war
+
+           dest: /opt/tomcat/webapps/demo-4.2.3-SNAPSHOT.war
