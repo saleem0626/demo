@@ -1,2 +1,2 @@
-ubuntu@172.31.6.144
+172.31.6.144 ansible_user=ubuntu
 
