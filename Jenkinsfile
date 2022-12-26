@@ -30,7 +30,7 @@ pipeline {
           }
 stage ('Package'){
             steps {
-                sh 'mvn clean package'
+                sh 'mvn package'
              }
         }
 	stage ('Server'){
@@ -38,7 +38,7 @@ stage ('Package'){
                rtServer (
                  id: "jfrog",
                  url: 'http://13.126.218.81:8081/artifactory',
-                 username: 'admin',
+                 username: 'darsh',
                   password: 'Darshan4',
                   bypassProxy: true,
                    timeout: 300
