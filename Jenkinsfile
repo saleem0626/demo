@@ -37,7 +37,7 @@ stage ('Package'){
             steps {
                rtServer (
                  id: "jfrog",
-                 url: 'http://13.126.218.81:8081/artifactory/',
+                 url: 'http://13.126.218.81:8081/artifactory',
                  username: 'admin',
                   password: 'Darshan4',
 		  credentialsId: 'jfrog',     
