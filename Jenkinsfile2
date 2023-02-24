@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+    //gannu
     stages{
        stage('GetCode'){
             steps{
