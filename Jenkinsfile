@@ -1,80 +1,31 @@
 pipeline {
     agent any
-    
-    stages{
-       stage('GetCode'){
-            steps{
-                git branch: 'main', credentialsId: '40f7a21f-6ce7-4bc0-b115-4a85ab05b062', url: 'https://github.com/Patilgit/demo.git'
-            }
-         }        
-       stage('Build'){
-            steps{
-                sh 'mvn install'
+
+    stages {
+        stage('Gitcheckout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/saleem0626/demo.git'
             }
         }
+        stage('build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Docker Build and Push') {
+      steps {
+      	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+        	sh "docker build -t saleem ."
+        	sh "docker tag saleem saleem4411/demo:latest"
+        	sh "docker push saleem4411/demo:latest"
         
-        stage('SonarQube analysis') {
-            steps{
-                withSonarQubeEnv('sonar') { 
-                 sh "mvn clean package sonar:sonar"
-                }
-            }
-       }
-       stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-                // in manage jenkins > configure systems > sonarqube servers > Url should not end with / it must be http//ip:9000
-              }
-            }
-          }
-//stage ('Package'){
-            //steps {
-  //              sh 'mvn package'
-    //         }
-      //  }
-	stage ('Server'){
-            steps {
-               rtServer (
-                 id: "jfrog",
-                 url: 'http://13.126.218.81:8081/artifactory',
-                 username: 'admin',
-                  password: 'Darshan4',
-		  credentialsId: 'jfrog',     
-                  bypassProxy: true,
-                   timeout: 300
-                        )
-            }
-        }
-        stage('Upload'){
-            steps{
-                rtUpload (
-                 serverId:"jfrog" ,
-                  spec: '''{
-                   "files": [
-                      {
-                      "pattern": "*.war",
-                      "target": "libs-snapshot/"
-                      }
-                            ]
-                           }''',
-                        )
-            }
-        }
-        stage ('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "jfrog"
-                )
-            }
-        }
-     
-      stage('Ansible Deploy') {
-             
-           steps {
-                 sh 'ansible-playbook playbook.yml'
-            }
         }
       }
+           }
+	    stage('deploy')
+	    steps{
+		    sh "kubectl apply -f deployment_demo.yml"
+	    }
     }
-
+}
